@@ -1,0 +1,19 @@
+service: hapi-lambda-demo
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+stage: dev
+region: us-east-1
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - http:
+          path: "{proxy+}"
+          method: any
+          cors: true
+
+plugins:
+  - serverless-offline
