@@ -8,7 +8,7 @@ const api = require('./api');           // REST API
 // make a happy server
 const server = new Hapi.Server();
 server.connection({routes: { cors: true}});
-const plugins = [config, monitor, auth, api];
+const plugins = [config, monitor, api];
 
 let loaded = false;
 server.makeReady = function(onServerReady){
