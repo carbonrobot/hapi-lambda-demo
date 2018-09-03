@@ -25,6 +25,7 @@ describe('auth', function () {
         this.server = require('../../server.helper.spec').createServer(done);
     });
 
+    //  TODO: Find/fix this unit test
     it('should return a profile for the authenticated user', function (done) {
 
         const token = this.server.methods.createToken({ id: '31' });

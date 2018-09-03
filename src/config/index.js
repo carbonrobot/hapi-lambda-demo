@@ -8,8 +8,7 @@ const path = require('path');
  * Extend the hapi server settings with our configuration
  * Looks for the NODE_ENV variable
  */
-module.exports.register = function(server, options, next) {
-
+const register = async (server, options) => {
     // Map the configuration files
     let config = {};
     glob.sync('./env/*.conf.js', {
@@ -23,15 +22,12 @@ module.exports.register = function(server, options, next) {
     config = extend(true, config.default, config[process.env.NODE_ENV]);
 
     // attach the config to the server app settings
+    //  example: request.server.settings.app
     server.settings.app = config;
-
-    return next();
 };
 
-// hapi.js plugin schema
-module.exports.register.attributes = {
-    pkg: {
-        name: 'config',
-        version: '1.0.0'
-    }
-};
+exports.plugin = {
+    name: 'config',
+    version: '1.0.0',
+    register
+}
