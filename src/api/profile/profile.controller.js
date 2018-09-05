@@ -11,16 +11,16 @@ module.exports = {
     /**
      * Returns profile information for the logged in user
      */
-    getProfile: function (request, reply) {
+    getProfile: async function (request, h) {
         const user = request.auth.credentials;
         const service = new Services.EmployeeService(request);
         
         const profile = service.getProfile(user.id);
         if (profile) {
-            return reply(profile);
+            return profile;
         }
         
-        return reply(Boom.notFound());
+        return Boom.notFound();
     }
 
 };

@@ -5,19 +5,20 @@ const config = require('./config');     // application configuration
 const monitor = require('./monitor');   // Monitoring, logging
 const api = require('./api');           // REST API
 
-// make a happy server
-const server = new Hapi.Server();
-server.connection({routes: { cors: true}});
+//  make a happy server
+const server = new Hapi.Server({
+    port: process.env.port || 3000,
+    routes: { cors: true}
+});
+
+//  Register plugins
 const plugins = [config, monitor, api];
 
 let loaded = false;
-server.makeReady = function(onServerReady){
-    if(!loaded){
-        server.register(plugins, onServerReady);
+server.makeReady = async function(){
+    if (!loaded) {
+        await server.register(plugins);
         loaded = true;
-    }
-    else{
-        onServerReady(null);
     }
 };
 
