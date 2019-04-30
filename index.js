@@ -15,6 +15,11 @@ exports.handler = async event => {
   }
 
   const request = transformRequest(event);
+
+  // handle cors here if needed
+  request.headers['Access-Control-Allow-Origin'] = '*';
+  request.headers['Access-Control-Allow-Credentials'] = true;
+
   const response = await server.inject(request);
 
   return transformResponse(response);
