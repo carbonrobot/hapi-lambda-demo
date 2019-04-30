@@ -3,35 +3,21 @@
   "version": "1.0.0",
   "description": "An example of running Hapi.js on AWS Lambda",
   "main": "index.js",
+  "engines": {
+    "node": "8.x"
+  },
   "scripts": {
     "start": "sls offline",
     "debug": "bash -c './debug-sls.sh offline'",
-    "deploy": "sls deploy -v",
-    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json",
-    "lint": "jshint src || true"
+    "deploy": "sls deploy -v"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "hapi-swagger": "^7.7.0",
-    "jasmine": "^2.5.3",
-    "jshint": "^2.9.4",
-    "jshint-stylish": "^2.2.1",
-    "nock": "^9.0.9",
-    "nodemon": "^1.11.0",
-    "proxyquire": "^1.7.11",
-    "serverless-offline": "^3.13.1",
-    "sinon": "^1.17.7"
+    "nodemon": "^1.18.11",
+    "serverless-offline": "^4.9.4"
   },
   "dependencies": {
-    "boom": "^4.2.0",
-    "crumb": "^6.0.3",
-    "extend": "^3.0.0",
-    "glob": "^7.1.1",
-    "good": "~8.1.1",
-    "good-console": "^6.4.0",
-    "good-squeeze": "^5.0.1",
-    "hapi": "~17.5.4",
-    "joi": "^10.2.2"
+    "@hapi/hapi": "^18.3.1"
   }
 }

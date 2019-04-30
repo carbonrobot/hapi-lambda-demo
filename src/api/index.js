@@ -1,22 +1,18 @@
 'use strict';
 
-const glob = require('glob');
+const health = require('./health');
 
 /**
  * Register the API module with the server
  */
-const register = async (server, options) => {
-    // register api routes
-    glob.sync('./**/*.routes.js', {
-        cwd: __dirname
-    }).forEach(filepath => {
-        server.route(require(filepath));
-    });
+const register = server => {
+  server.route(health);
 };
 
-exports.plugin = {
+module.exports = {
+  plugin: {
     name: 'api',
     version: '1.0.0',
-    dependencies: ['auth'],
     register
-}
+  }
+};

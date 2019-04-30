@@ -1,24 +1,21 @@
-'use strict';
+const api = require('./src');
 
-const server = require('./src');
+// OR use require('hapi-lambda');
+const { transformRequest, transformResponse } = require('./src/serverless');
+
+// cache the server for better peformance
+let server;
 
 /**
  * This module maps the Lambda proxy requests to the Hapijs router
  */
-exports.handler = async (event, context, callback) => {
-    await server.makeReady();
+exports.handler = async event => {
+  if (!server) {
+    server = await api.init();
+  }
 
-    const options = {
-        method: event.httpMethod,
-        url: event.path,
-        payload: event.body,
-        headers: event.headers,
-        validate: false
-    };
+  const request = transformRequest(event);
+  const response = await server.inject(request);
 
-    const response = await server.inject(options);
-    return {
-        statusCode: response.statusCode,
-        body: JSON.stringify(response.result)
-    };
+  return transformResponse(response);
 };

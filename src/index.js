@@ -1,25 +1,17 @@
-'use strict';
+const Hapi = require('@hapi/hapi');
+const api = require('./api');
 
-const Hapi = require('hapi');           // a very happy server
-const config = require('./config');     // application configuration
-const monitor = require('./monitor');   // Monitoring, logging
-const api = require('./api');           // REST API
+module.exports = {
+  init: async () => {
+    const server = new Hapi.server({
+      port: process.env.port || 3000,
+      routes: { cors: true }
+    });
 
-//  make a happy server
-const server = new Hapi.Server({
-    port: process.env.port || 3000,
-    routes: { cors: true}
-});
+    const plugins = [api];
+    await server.register(plugins);
 
-//  Register plugins
-const plugins = [config, monitor, api];
-
-let loaded = false;
-server.makeReady = async function(){
-    if (!loaded) {
-        await server.register(plugins);
-        loaded = true;
-    }
+    // return the server for Lambda support
+    return server;
+  },
 };
-
-module.exports = server;
